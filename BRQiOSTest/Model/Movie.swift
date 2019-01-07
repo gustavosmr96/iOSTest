@@ -9,5 +9,5 @@
 import Foundation
 
 class Movie: Codable {
-    var title: String
+    var Title: String
 }

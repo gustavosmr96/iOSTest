@@ -17,6 +17,10 @@ class MoviesTableCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
+    
+    func setup(viewModel: MoviesCellViewModel) {
+        self.titleLabel?.text = viewModel.labelValue()
+    }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

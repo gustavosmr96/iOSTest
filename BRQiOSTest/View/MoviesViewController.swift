@@ -11,40 +11,57 @@ import UIKit
 class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
-    var movies: [Movie] = []
+    
+    private var moviesViewModel: MoviesViewModel = {
+        return MoviesViewModel()
+    }()
+    
+    let searchController = UISearchController(searchResultsController: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        API.loadMovies(onComplete: { (movies) in
-            self.movies = movies
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }) { (error) in
-            print(error)
-//            switch error{
-//                case .invalidJSON
-//                    print("JSON invalido")
-//            }
-        }
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "movieCell", for: indexPath) as! MoviesTableCell
-        let movie = movies[indexPath.row]
-        cell.titleLabel.text = movie.Title
-        return cell
+        styleUI()
+        fillUI()
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return movies.count
+    func fillUI(){
+        moviesViewModel.reloadTableViewClosure = { [weak self] () in
+            DispatchQueue.main.async {
+                self?.tableView.reloadData()
+            }
+        }
     }
-
+    
+    func styleUI(){
+        // Setup the Search Controller
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Buscar filmes"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+        self.tableView.tableFooterView = UIView()
+    }
+    
+    func searchBarIsEmpty() -> Bool {
+        return searchController.searchBar.text?.isEmpty ?? true
+    }
+    
+    func isFiltering() -> Bool {
+        return searchController.isActive && !searchBarIsEmpty()
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: "movieCell", for: indexPath) as! MoviesTableCell
+        let cellVM = self.moviesViewModel.cellVM(forIndex: indexPath.row)
+        cell.setup(viewModel: cellVM)
+        return cell
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return moviesViewModel.numberOfRows()
+    }
 }
-
+extension MoviesViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        self.moviesViewModel.tryMovies(title: searchController.searchBar.text!)
+    }
+}

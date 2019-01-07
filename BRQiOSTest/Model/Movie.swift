@@ -9,5 +9,15 @@
 import Foundation
 
 class Movie: Codable {
-    var Title: String
+    var id: String?
+    var title: String?
+    var genre: String?
+    var director: String?
+    var released: String?
+    var poster: String?
+    var actors: String?
+    
+    private enum CodingKeys: String, CodingKey {
+        case title = "Title", genre = "Genre", director = "Director", released = "Released", poster = "Poster", actors = "Actors", id = "imdbID"
+    }
 }

@@ -21,6 +21,7 @@
 		E639D44221E3785F0002D95A /* MoviesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E639D44121E3785F0002D95A /* MoviesViewModel.swift */; };
 		E639D44621E38DD30002D95A /* MoviesCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E639D44521E38DD30002D95A /* MoviesCellViewModel.swift */; };
 		E639D44821E3E5090002D95A /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E639D44721E3E5090002D95A /* DetailViewController.swift */; };
+		E639D44A21E4C2220002D95A /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E639D44921E4C2220002D95A /* DetailViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		E639D44121E3785F0002D95A /* MoviesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesViewModel.swift; sourceTree = "<group>"; };
 		E639D44521E38DD30002D95A /* MoviesCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesCellViewModel.swift; sourceTree = "<group>"; };
 		E639D44721E3E5090002D95A /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		E639D44921E4C2220002D95A /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				E639D44121E3785F0002D95A /* MoviesViewModel.swift */,
+				E639D44921E4C2220002D95A /* DetailViewModel.swift */,
 				E639D44521E38DD30002D95A /* MoviesCellViewModel.swift */,
 			);
 			path = ViewModel;
@@ -304,6 +307,7 @@
 				E639D44821E3E5090002D95A /* DetailViewController.swift in Sources */,
 				93EAB42021E2908800C7AFE6 /* Results.swift in Sources */,
 				E639D40521DFB60C0002D95A /* MoviesViewController.swift in Sources */,
+				E639D44A21E4C2220002D95A /* DetailViewModel.swift in Sources */,
 				E639D40321DFB60C0002D95A /* AppDelegate.swift in Sources */,
 				E639D44621E38DD30002D95A /* MoviesCellViewModel.swift in Sources */,
 				E639D43E21DFE7570002D95A /* API.swift in Sources */,

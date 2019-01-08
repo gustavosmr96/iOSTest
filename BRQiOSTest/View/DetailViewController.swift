@@ -17,24 +17,28 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var directorLabel: UILabel!
     @IBOutlet weak var actorsLabel: UILabel!
     
-    var movie = Movie()
+    var id: String = ""
+    
+    private var detailViewModel: DetailViewModel = {
+        return DetailViewModel()
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fillUI()
+        detailViewModel.setViewItems = { [weak self] () in
+            DispatchQueue.main.async {
+                self?.fillUI()
+            }
+        }
+        detailViewModel.fetchMovie(id: id)
     }
     
     func fillUI(){
-        API.loadMovie(id: "tt0076759", onComplete: { (movie) in
-            self.movie = movie
-        }) { (error) in
-            print(error)
-        }
-        titleLabel.text = movie.title
-        releasedLabel.text = movie.released
-        genreLabel.text = movie.genre
-        directorLabel.text = movie.director
-        actorsLabel.text = movie.actors
+        guard let movie = detailViewModel.movieDetails() else {return}
+        self.titleLabel.text = movie.title
+        self.releasedLabel.text = movie.released
+        self.genreLabel.text = movie.genre
+        self.directorLabel.text = movie.director
+        self.actorsLabel.text = movie.actors
     }
-    
 }

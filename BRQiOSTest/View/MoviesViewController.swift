@@ -59,9 +59,21 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return moviesViewModel.numberOfRows()
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.moviesViewModel.movieID(indexPath: indexPath)
+        self.performSegue(withIdentifier: "ShowDetails", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let nextVC = segue.destination as? DetailViewController {
+            nextVC.id = moviesViewModel.selectedMovieId
+        }
+    }
+    
 }
 extension MoviesViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        self.moviesViewModel.tryMovies(title: searchController.searchBar.text!)
+        self.moviesViewModel.fetchMovies(title: searchController.searchBar.text!)
     }
 }

@@ -19,7 +19,7 @@ enum MovieError {
 
 class API {
     
-    private static let basePath = "http://www.omdbapi.com/?i=tt3896198&apikey=c5c1e2c3&"
+    private static let basePath = "http://www.omdbapi.com/?apikey=c5c1e2c3&"
     private static let session = URLSession.shared
     
     class func loadMovies(search: String, onComplete: @escaping ([Movie]) -> Void, onError: @escaping (MovieError) -> Void) {

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class DetailViewController: UIViewController {
     
@@ -31,6 +32,11 @@ class DetailViewController: UIViewController {
             }
         }
         detailViewModel.fetchMovie(id: id)
+        styleUI()
+    }
+    
+    func styleUI(){
+        self.navigationController?.navigationBar.tintColor = .white
     }
     
     func fillUI(){
@@ -40,5 +46,6 @@ class DetailViewController: UIViewController {
         self.genreLabel.text = movie.genre
         self.directorLabel.text = movie.director
         self.actorsLabel.text = movie.actors
+        self.posterIv.sd_setImage(with: URL(string: movie.poster!), placeholderImage: UIImage(named: "loading.png"))
     }
 }

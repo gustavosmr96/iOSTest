@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Movie: Codable {
+struct Movie: Decodable {
     var id: String?
     var title: String?
     var genre: String?

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Results: Codable {
+class Results: Decodable {
     var movies: [Movie]
     
     private enum CodingKeys: String, CodingKey {

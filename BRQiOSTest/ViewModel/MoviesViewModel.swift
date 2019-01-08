@@ -8,9 +8,7 @@
 
 import Foundation
 
-//public typealias UpdatedClosure = () -> ()
-
-class MoviesViewModel: NSObject {
+class MoviesViewModel {
 
     private let service = API()
     

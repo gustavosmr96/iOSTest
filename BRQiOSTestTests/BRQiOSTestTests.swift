@@ -26,6 +26,26 @@ class BRQiOSTestTests: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
     
+    func testMovieViewModel() {
+        let movie = Movie(id: "id", title: "title", genre: "genre", director: "director", released: "released", poster: "poster", actors: "actors")
+        let movieViewModel = MovieViewModel(movie: movie)
+        
+        XCTAssertEqual(movie.title, movieViewModel.title)
+        XCTAssertEqual(movie.id, movieViewModel.id)
+    }
+    
+    func testDetailViewModel() {
+        let movie = Movie(id: "id", title: "title", genre: "genre", director: "director", released: "released", poster: "poster", actors: "actors")
+        let detailViewModel = DetailViewModel(movie: movie)
+        
+        XCTAssertEqual(movie.title, detailViewModel.title)
+        XCTAssertEqual(movie.actors, detailViewModel.actors)
+        XCTAssertEqual(movie.director, detailViewModel.director)
+        XCTAssertEqual(movie.genre, detailViewModel.genre)
+        XCTAssertEqual(movie.poster, detailViewModel.poster)
+        XCTAssertEqual(movie.released, detailViewModel.released)
+    }
+    
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measure {

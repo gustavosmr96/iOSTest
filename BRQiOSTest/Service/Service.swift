@@ -17,14 +17,16 @@ enum MovieError {
     case invalidJSON
 }
 
-class API {
+class Service {
     
     private static let basePath = "http://www.omdbapi.com/?apikey=c5c1e2c3&"
     private static let session = URLSession.shared
     
     class func loadMovies(search: String, onComplete: @escaping ([Movie]) -> Void, onError: @escaping (MovieError) -> Void) {
+        print(basePath+"s="+search)
         guard let url = URL(string: basePath+"s="+search) else {
             onError(.url)
+            
             return
         }
         

@@ -13,6 +13,12 @@ class MoviesTableCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var posterIv: UIImageView!
     
+    var movieViewModel: MovieViewModel! {
+        didSet{
+            titleLabel.text = movieViewModel.title
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

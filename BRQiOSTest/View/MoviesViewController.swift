@@ -12,24 +12,25 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     @IBOutlet weak var tableView: UITableView!
     
-    private var moviesViewModel: MoviesViewModel = {
-        return MoviesViewModel()
-    }()
+    var index: Int = 0
+    var movieViewModels = [MovieViewModel]()
+    
+    fileprivate func fetchData(search: String) {
+        Service.loadMovies(search: search, onComplete: { (movies) in
+            self.movieViewModels = movies.map({return MovieViewModel(movie: $0)})
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }) { (error) in
+            print(error)
+        }
+    }
     
     let searchController = UISearchController(searchResultsController: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         styleUI()
-        fillUI()
-    }
-    
-    func fillUI(){
-        moviesViewModel.reloadTableViewClosure = { [weak self] () in
-            DispatchQueue.main.async {
-                self?.tableView.reloadData()
-            }
-        }
     }
     
     func styleUI(){
@@ -52,28 +53,30 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "movieCell", for: indexPath) as! MoviesTableCell
-        let cellVM = self.moviesViewModel.cellVM(forIndex: indexPath.row)
-        cell.setup(viewModel: cellVM)
+        let movieViewModel = movieViewModels[indexPath.row]
+        cell.movieViewModel = movieViewModel
         return cell
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return moviesViewModel.numberOfRows()
+        return movieViewModels.count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.moviesViewModel.movieID(indexPath: indexPath)
+        self.index = indexPath.row
         self.performSegue(withIdentifier: "ShowDetails", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let nextVC = segue.destination as? DetailViewController {
-            nextVC.id = moviesViewModel.selectedMovieId
+        if let detailViewController = segue.destination as? DetailViewController {
+            detailViewController.id = movieViewModels[index].id
         }
     }
     
 }
 extension MoviesViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        self.moviesViewModel.fetchMovies(title: searchController.searchBar.text!)
+        guard let search = searchController.searchBar.text else {return}
+        self.fetchData(search: search)
     }
 }
